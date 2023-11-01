@@ -5,10 +5,49 @@ Answer the following questions and provide the SQL queries used to find the answ
 
 
 SQL Queries:
+```SQL
+-- Query for highest level of transaction by country
+SELECT
+	country,
+	SUM(total_transaction_revenue) AS total_revenue -- Sum of all transactions from a country
+FROM 
+	all_sessions
+WHERE -- Only want countries with valid transactions
+	total_transaction_revenue IS NOT NULL
+	AND
+	country IS NOT NULL
+GROUP BY
+	country
+ORDER BY
+	total_revenue DESC -- Viewing highest revenues
+```
+```SQL
+-- Query for highest level of transaction by city
+SELECT
+	city,
+	SUM(total_transaction_revenue) AS total_revenue -- Sum of all transactions from a city
+FROM 
+	all_sessions
+WHERE -- Only want cities with valid transactions
+	total_transaction_revenue IS NOT NULL
+	AND
+	city IS NOT NULL
+GROUP BY
+	city
+ORDER BY
+	total_revenue DESC -- Viewing highest revenues
+```
 
 
+Answer: Countries with the highest transaction levels, in order:
+1. United States
+2. Israel
+3. Australia
 
-Answer:
+Cities with the highest transaction levels, in order:
+1. San Francisco
+2. Sunnyvale
+3. Atlanta
 
 
 
