@@ -55,11 +55,50 @@ Cities with the highest transaction levels, in order:
 **Question 2: What is the average number of products ordered from visitors in each city and country?**
 
 
-SQL Queries:
+SQL Queries: 
+```SQL
+-- Query for average order amount by country
+SELECT 
+	country,
+	ROUND(AVG(total_ordered)) AS avg_ordered -- Rounding value since there are no portion products
+FROM 
+	all_sessions
+JOIN
+	sales_report ON -- The sales_report table includes total order values
+	all_sessions.product_sku = sales_report.product_sku
+GROUP BY
+	country
+ORDER BY 
+	avg_ordered DESC -- Viewing highest average orders
+```
+```SQL
+-- Query for average order amount by city
+SELECT 
+	city,
+	ROUND(AVG(total_ordered)) AS avg_ordered -- Rounding value since there are no portion products
+FROM 
+	all_sessions
+JOIN
+	sales_report ON -- The sales_report table includes total order values
+	all_sessions.product_sku = sales_report.product_sku
+GROUP BY
+	city
+ORDER BY 
+	avg_ordered DESC -- Viewing highest average orders
+```
 
 
+Answer: Average order amount by country, from most to least:
+1. Saudi Arabia -> 96
+2. Kuwait -> 86
+3. Ethiopia, Oman, Laos -> 85
 
-Answer:
+Average order amount by city, from most to least:
+1. Riyadh, Brno -> 319
+2. Rexburg -> 251
+3. Sacramento -> 189
+
+(queries show more, these are just the top 3)
 
 
 
