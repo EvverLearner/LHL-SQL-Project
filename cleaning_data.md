@@ -126,7 +126,8 @@ ALTER TABLE all_sessions
 DROP COLUMN product_refund_amount,
 DROP COLUMN item_quantity,
 DROP COLUMN item_revenue,
-DROP COLUMN search_keyword
+DROP COLUMN search_keyword,
+DROP COLUMN transaction_revenue
 ```
 
 **analytics**
