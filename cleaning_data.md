@@ -14,7 +14,8 @@ What issues will you address by cleaning the data?
 6. `v2_product_category` column has some values that are `(not set)`, which I will set to `NULL`.
 7. `product_variant` column has most values that are `(not set)`, which I will set to `NULL`.
 8. `transaction_revenue` column has a few values that do not make sense, so we will adjust them by dividing them by 1 000 000.
-9. `product_refund_amount`, `item_quantity`, `item_revenue`, `search_keyword` are all empty columns, so we will remove them for general efficiency.
+9. After adjustments, `transaction_revenue` is found to be a column with entirely redundant data to the `total_transaction_revenue` column. Thus, we will remove it; we will include it with the columns in `step 10`.
+10. `product_refund_amount`, `item_quantity`, `item_revenue`, `search_keyword` are all empty columns, so we will remove them for general efficiency.
 
 **analytics**
 1. Created an autoincrementing `id` column as a PK using pgAdmin GUI during import of cvs files.
@@ -99,6 +100,25 @@ WHERE
 UPDATE all_sessions
 SET
 	transaction_revenue = transaction_revenue / 1000000
+```
+```SQL
+-- Checking to see if the transaction_revenue column is redundant.
+-- We also check for different values to make sure there is no unique data stored in it.
+SELECT 
+	total_transaction_revenue, 
+	transaction_revenue
+FROM 
+	all_sessions
+WHERE 
+	total_transaction_revenue = transaction_revenue
+
+SELECT 
+	total_transaction_revenue, 
+	transaction_revenue
+FROM 
+	all_sessions
+WHERE 
+	total_transaction_revenue != transaction_revenue
 ```
 ```SQL
 -- Remove empty columns
