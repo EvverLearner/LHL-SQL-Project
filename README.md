@@ -15,3 +15,4 @@
 
 ## Future Goals
 (what would you do if you had more time?)
+1. Function for table manipulation, such as removing columns with entirely NULL values
