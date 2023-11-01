@@ -5,7 +5,10 @@ What issues will you address by cleaning the data?
 2. Providing a PK for a table that has no suitable column. I achieved this by adding an auto-incrementing `id` column to such tables.
 
 **all_sessions**
-1. I am unsure what the values in the `time` column represents. As a result, I will be cautious in adjusting or using that column for analysis. 
+1. `country` column has some values that are `(not set)`, which I will set to `NULL`.
+2. `city` column has many values that are `(not set)` or `not available in demo dataset`, which I will set to `NULL`.
+3. `total_transaction_revenue` column has values that do not make sense, so we will adjust them by dividing them by 1 000 000.
+4. 
 
 
 
@@ -20,4 +23,28 @@ Below, provide the SQL queries you used to clean your data.
 SELECT id FROM all_sessions
 
 SELECT DISTINCT id FROM all_sessions
+```
+```SQL
+-- Remove instances of '(not set)'.
+UPDATE all_sessions
+SET
+	country = NULL
+WHERE
+	country = '(not set)'
+```
+```SQL
+-- Remove instances of '(not set)' and 'not available in demo dataset'.
+UPDATE all_sessions
+SET
+	city = NULL
+WHERE
+	city = '(not set)' 
+	OR 
+	city = 'not available in demo dataset'
+```
+```SQL
+-- Make revenue data more sensible.
+UPDATE all_sessions
+SET
+	total_transaction_revenue = total_transaction_revenue / 1000000
 ```
