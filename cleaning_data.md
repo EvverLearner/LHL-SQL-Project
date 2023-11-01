@@ -8,6 +8,6 @@ Queries:
 Below, provide the SQL queries you used to clean your data.
 
 ```SQL
--- Confirms that id is a suitable PK for all_sessions table. The total rows returned is the same 
+-- Confirms that 'id' is a suitable PK for all_sessions table.
 SELECT DISTINCT id FROM all_sessions
 ```
