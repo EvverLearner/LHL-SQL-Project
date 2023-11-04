@@ -34,7 +34,7 @@ LEFT JOIN -- sales_by_sku has more rows of product_sku
 	sales_report ON 
 	sales_report.product_sku = sales_by_sku.product_sku
 ```
-This query returns sales_by_sku showing more product_sku rows, in fact 2 rows even have an amount ordered but there is no additonal data to connect it to, which is a QA concern that would require consulting the data source, or at least making a note of it in the analysis.
+This query returns sales_by_sku showing more product_sku rows, in fact 2 rows even have an amount ordered but there is no additonal data to connect it to, which is a QA concern that would require consulting the data source, or at least making a note of it in the analysis.\
 5. Avoiding data that is not relevant to the scope of the project, i.e. not helpful in data analysis.
 ```SQL
 -- Query checking if transactions column has any value.
