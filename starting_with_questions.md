@@ -283,7 +283,7 @@ ORDER BY
 
 
 
-Answer: *There is missing data for each transaction's specific amount of product sold; these answers are based on the data from total orders for each product and who bought those products, which may not be accurate*
+Answer: *There is missing data for each transaction's specific amount of product sold; these answers are based on the data from total orders for each product and who bought those products, which may not be accurate*\
 Top-selling product by country:
 1. "Ballpoint LED Light Pen" -> 12 countries
 2. "17oz Stainless Steel Sport Bottle" -> 7 countries
@@ -337,7 +337,7 @@ ORDER BY
 
 
 
-Answer: *A lot of missing revenue data*
+Answer: *A lot of missing revenue data*\
 To summarize revenue by country, by far the biggest customer base is the United States. Generating $13,154.17 in sales, that is 92.1% of recorded revenue by country from the United States alone, which means trends for products purchased by customers in that region should have more weight in decision making. Summarizing revenue by city is more nuanced; San Francisco generated the most recorded revenue at $1,564.32, which is 19.1% of revenue by city. Perhaps observing trends in cities in the United States can lead to information that will maximize profits.
 
 
