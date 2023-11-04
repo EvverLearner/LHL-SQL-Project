@@ -163,9 +163,9 @@ WHERE
 
 
 Answer:
-A pattern found in Saudi Arabia's orders is that they involve many purchases in Apparel categories, especially T-Shirts. They also have purchases from Android, Google, and YouTube branded products. Combing this with the previous observation in Saudi Arabia's high average order amount, we can potentially glean business growth opportunities.
+A pattern found in Saudi Arabia's orders is that they involve many purchases in 'Apparel' categories, especially T-Shirts. They also have purchases from Android, Google, and YouTube branded products. Combing this with the previous observation in Saudi Arabia's high average order amount, we can potentially glean business growth opportunities.
 
-
+A pattern observed in city sales regarding category of products, is that 'Lifestyle' products are not very popular. A query for this category only returns 35 rows of data, which is drastically less than all other categories offered on the site ('Bags' = 161 rows, 'Apparel' = 616 rows, 'Drinkware' = 147 rows, etc.). Perhaps a re-evaluation of these products is in order, and whether they are worth keeping.
 
 
 
