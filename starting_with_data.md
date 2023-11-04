@@ -8,7 +8,7 @@ SQL Queries:
 WITH revenue_per_visit AS (
 	SELECT 
 		visit_id,
-		SUM(revenue) as revenue
+		SUM(revenue) AS revenue
 	FROM 
 		analytics
 	WHERE
@@ -23,7 +23,7 @@ WITH revenue_per_visit AS (
 SELECT
 	revenue_per_visit.visit_id,
 	product_sku,
-	v2_product_name as product_name,
+	v2_product_name AS product_name,
 	revenue
 FROM
 	revenue_per_visit
