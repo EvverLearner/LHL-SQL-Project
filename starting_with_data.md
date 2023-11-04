@@ -1,8 +1,46 @@
 Question 1: What products are purchased in transactions with the highest money spent in a single session?
 
 SQL Queries:
+```SQL
+-- Query to find revenue per visit.
+
+-- First, find revenue made on each visit to the site.
+WITH revenue_per_visit AS (
+	SELECT 
+		visit_id,
+		SUM(revenue) as revenue
+	FROM 
+		analytics
+	WHERE
+		revenue IS NOT NULL
+	GROUP BY
+		visit_id
+	ORDER BY
+		revenue DESC
+)
+
+-- Second, join to all_session to get product name.
+SELECT
+	revenue_per_visit.visit_id,
+	product_sku,
+	v2_product_name as product_name,
+	revenue
+FROM
+	revenue_per_visit
+LEFT JOIN -- Checking if all_sessions has missing data on visits.
+	all_sessions ON
+	all_sessions.visit_id = revenue_per_visit.visit_id
+WHERE
+	v2_product_name IS NOT NULL
+ORDER BY
+	revenue DESC
+```
 
 Answer: 
+Products that have sold for the most in a single visit to the site:
+1. "Google Alpine Style Backpack" -> $1,002.78
+2. "SPF-15 Slim & Slender Lip Balm" -> $649.16
+3. "Nest® Learning Thermostat 3rd Gen-USA - White" -> $396.00
 
 
 
