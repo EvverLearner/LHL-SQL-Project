@@ -39,7 +39,8 @@ ORDER BY
 ```
 
 
-Answer: Countries with the highest transaction levels, in order:
+Answer: 
+Countries with the highest transaction levels, in order:
 1. United States
 2. Israel
 3. Australia
@@ -88,7 +89,8 @@ ORDER BY
 ```
 
 
-Answer: Average order amount by country, from most to least:
+Answer: 
+Average order amount by country, from most to least:
 1. Saudi Arabia -> 96
 2. Kuwait -> 86
 3. Ethiopia, Oman, Laos -> 85
@@ -302,10 +304,41 @@ A pattern we see in the top-selling products is that they are mostly stationary/
 **Question 5: Can we summarize the impact of revenue generated from each city/country?**
 
 SQL Queries:
+```SQL
+-- Query for total revenue by country
+SELECT
+	country, 
+	SUM(total_transaction_revenue) AS total_rev
+FROM 
+	all_sessions 
+WHERE 
+	total_transaction_revenue IS NOT NULL
+GROUP BY
+	country
+ORDER BY 
+	total_rev DESC
+```
+```SQL
+-- Query for total revenue by city
+SELECT
+	city,
+	SUM(total_transaction_revenue) AS total_rev
+FROM 
+	all_sessions 
+WHERE
+	city IS NOT NULL
+	AND
+	total_transaction_revenue IS NOT NULL
+GROUP BY
+	city
+ORDER BY
+	total_rev DESC
+```
 
 
 
-Answer:
+Answer: *A lot of missing revenue data*
+To summarize revenue by country, by far the biggest customer base is the United States. Generating $13,154.17 in sales, that is 92.1% of recorded revenue by country from the United States alone, which means trends for products purchased by customers in that region should have more weight in decision making. Summarizing revenue by city is more nuanced; San Francisco generated the most recorded revenue at $1,564.32, which is 19.1% of revenue by city. Perhaps observing trends in cities in the United States can lead to information that will maximize profits.
 
 
 
