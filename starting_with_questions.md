@@ -98,8 +98,6 @@ Average order amount by city, from most to least:
 2. Rexburg -> 251
 3. Sacramento -> 189
 
-(queries show more, these are just the top 3)
-
 
 
 
@@ -108,10 +106,65 @@ Average order amount by city, from most to least:
 
 
 SQL Queries:
+```SQL
+-- Query for types of products ordered by country
 
+-- First, grouping the categories of purchased products to each country
+WITH category_per_country AS (
+	SELECT 
+		DISTINCT(country),
+		v2_product_category AS prod_category
+	FROM 
+		all_sessions 
+	WHERE 
+		country IS NOT NULL 
+		AND 
+		v2_product_category IS NOT NULL
+	ORDER BY
+		country
+)
+
+-- Second, filtering to find patterns. This example is looking for a string match in countries.
+SELECT
+	country,
+	prod_category
+FROM
+	category_per_country
+WHERE
+	country = 'Saudi Arabia'
+```
+```SQL
+-- Query for types of products ordered by city
+
+-- First, grouping the categories of purchased products to each city
+WITH category_per_city AS (
+	SELECT 
+		DISTINCT(city),
+		v2_product_category AS prod_category
+	FROM 
+		all_sessions 
+	WHERE 
+		city IS NOT NULL 
+		AND 
+		v2_product_category IS NOT NULL
+	ORDER BY
+		city
+)
+
+-- Second, filtering to find patterns. This example is looking for a string match in category of product.
+SELECT
+	city,
+	prod_category
+FROM
+	category_per_city
+WHERE
+	prod_category LIKE '%Lifestyle%'
+```
 
 
 Answer:
+A pattern found in Saudi Arabia's orders is that they involve many purchases in Apparel categories, especially T-Shirts. They also have purchases from Android, Google, and YouTube branded products. Combing this with the previous observation in Saudi Arabia's high average order amount, we can potentially glean business growth opportunities.
+
 
 
 
@@ -121,10 +174,126 @@ Answer:
 
 
 SQL Queries:
+```SQL
+-- Query for top-selling product by country
+
+-- First, group different amounts of products sold in a transaction, per country
+WITH sales_per_country AS (	
+	SELECT
+		country,
+		total_ordered
+	FROM 
+		all_sessions 
+	JOIN 
+		sales_report ON 
+		sales_report.product_sku = all_sessions.product_sku
+	GROUP BY
+		country, 
+		total_ordered
+	ORDER BY -- Viewing alphabetically, each country's different order amounts
+		country
+),
+
+-- Second, filter for the highest order amount, per country
+highest_sale_per_country AS (
+	SELECT 
+		country, 
+		MAX(total_ordered) AS highest_order_amnt
+	FROM
+		sales_per_country
+	GROUP BY
+		country
+)
+
+-- Lastly, join the highest order amount of each country to sales_report to get the name of the product ordered
+SELECT
+	country,
+	name,
+	highest_order_amnt
+FROM
+	highest_sale_per_country
+JOIN
+	sales_report ON
+	sales_report.total_ordered = highest_sale_per_country.highest_order_amnt
+WHERE
+	highest_order_amnt != 0
+	AND
+	country IS NOT NULL
+GROUP BY
+	country,
+	name,
+	highest_order_amnt
+ORDER BY
+	highest_order_amnt DESC
+```
+```SQL
+-- Query for top-selling product by city
+
+-- First, group different amounts of products sold in a transaction, per city
+WITH sales_per_city AS (	
+	SELECT
+		city,
+		total_ordered
+	FROM 
+		all_sessions 
+	JOIN 
+		sales_report ON 
+		sales_report.product_sku = all_sessions.product_sku
+	GROUP BY
+		city, 
+		total_ordered
+	ORDER BY -- Viewing alphabetically, each city's different order amounts
+		city
+),
+
+-- Second, filter for the highest order amount, per city
+highest_sale_per_city AS (
+	SELECT 
+		city, 
+		MAX(total_ordered) AS highest_order_amnt
+	FROM
+		sales_per_city
+	GROUP BY
+		city
+)
+
+-- Lastly, join the highest order amount of each city to sales_report to get the name of the product ordered
+SELECT
+	city,
+	name,
+	highest_order_amnt
+FROM
+	highest_sale_per_city
+JOIN
+	sales_report ON
+	sales_report.total_ordered = highest_sale_per_city.highest_order_amnt
+WHERE
+	highest_order_amnt != 0
+	AND
+	city IS NOT NULL
+GROUP BY
+	city,
+	name,
+	highest_order_amnt
+ORDER BY
+	highest_order_amnt DESC
+```
 
 
 
-Answer:
+Answer: *There is missing data for each transaction's specific amount of product sold; these answers are based on the data from total orders for each product and who bought those products, which may not be accurate*
+Top-selling product by country:
+1. "Ballpoint LED Light Pen" -> 12 countries
+2. "17oz Stainless Steel Sport Bottle" -> 7 countries
+3. "Leatherette Journal" -> 6 countries
+
+Top-selling product by city:
+1. "Ballpoint LED Light Pen" -> 12 cities
+2. "17oz Stainless Steel Sport Bottle" -> 7 cities
+3. "Leatherette Journal" -> 9 countries
+
+A pattern we see in the top-selling products is that they are mostly stationary/office supplies, which can be useful information if we want to capitalize on this category of product to increase sales or have more targeted marketing. We also see sports bottles as the second highest selling product, and other bottle accessories appear in the top 10 products; this can be another potential area of business growth. Analysis of cost per product can give more insight.
+
 
 
 
